@@ -8,9 +8,13 @@ Android Maven私有仓库搭建笔记
 &emsp;&emsp;Gradle是一个基于JVM的构建工具，是一款通用灵活的构建工具，支持maven， Ivy仓库，支持传递性依赖管理，而不需要远程仓库或者是pom.xml和ivy.xml配置文件，基于Groovy，build脚本使用Groovy编写。
 
 &emsp;&emsp;Android支持的Maven仓库：
+
 &emsp;&emsp;**mavenCentral** 是最早的 maven 中央仓库
+
 &emsp;&emsp;**jcenter** 是 Android Studio 0.8 版本起的默认 maven **中央仓库**
+
 &emsp;&emsp;**本机的仓库**
+
 &emsp;&emsp;**部署在内网服务器的私有仓库**
 
 ### 一、为什么需要搭建maven私有仓库？
@@ -33,9 +37,13 @@ app开发中遇到问题:
 
 ### 二、 使用Nexus搭建 maven 私服
 ###### &emsp;&emsp;Nexus是什么？
+
 &emsp;&emsp;Nexus是一个基于maven的仓库管理的社区项目.主要的使用场景就是可以在局域网搭建一个maven私服,用来部署第三方公共构件或者作为远程仓库在该局域网的一个代理.简单举几个例子就是:
+
 &emsp;&emsp;第三方Jar包可以放在nexus上,项目可以直接通过Url和路径配置直接引用.方便进行统一管理.
+
 &emsp;&emsp;同时有多个项目在开发的时候,一些共用基础模块可以单独抽取到nexus上,需要用的项目直接从nexus上拉取就行(基础模块的实现,维护和部署可以交给专门的人员,其他项目不用关心代码实现,这样也可以达到保证核心代码不泄露).
+
 &emsp;&emsp;封闭开发的过程中开发机是不能上公网的,所以连接central repository和下载jar就比较麻烦,这时就可以用nexus搭建起来一个介于公网和局域网之间的桥梁
 
 ### 三、所需工具
