@@ -2,7 +2,9 @@ Android Maven私有仓库搭建笔记
 
 ### 前言
 ###### &emsp;&emsp;什么是maven、gradle？
+
 &emsp;&emsp;Maven是一个项目管理和自动构建工具。
+
 &emsp;&emsp;Gradle是一个基于JVM的构建工具，是一款通用灵活的构建工具，支持maven， Ivy仓库，支持传递性依赖管理，而不需要远程仓库或者是pom.xml和ivy.xml配置文件，基于Groovy，build脚本使用Groovy编写。
 
 &emsp;&emsp;Android支持的Maven仓库：
@@ -14,8 +16,10 @@ Android Maven私有仓库搭建笔记
 ### 一、为什么需要搭建maven私有仓库？
 
 &emsp;&emsp;做java开发的童鞋对Maven一定不陌生；做android开发的童鞋，用得最多的是gradle。其实gradle的第三方库，也是放在maven仓库上。
+
 &emsp;&emsp;对于第三方库，大家基本都配置maven、gradle从远程获取，估计很少直接下载jar放在工程里（对于没有放在maven repository上的库，只能这么干）。这么做方便管理依赖。
-app开发中遇到问题
+
+app开发中遇到问题:
 &emsp;&emsp;做app开发，特别是只有几万行代码量的小项目，开发团队也就几个人，通常只用一个工程玩耍。随着业务扩展，工程变得越来越大，代码量大大增加，开发人数也多了，问题开始暴漏：改动一个地方往往影响到其他人的代码，功能模块耦合严重，构建速度慢....
 
 &emsp;&emsp;业界一些解决方法：
