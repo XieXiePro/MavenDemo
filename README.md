@@ -14,14 +14,10 @@ Android Maven私有仓库搭建笔记
 ### 一、为什么需要搭建maven私有仓库？
 
 &emsp;&emsp;做java开发的童鞋对Maven一定不陌生；做android开发的童鞋，用得最多的是gradle。其实gradle的第三方库，也是放在maven仓库上。
-
 &emsp;&emsp;对于第三方库，大家基本都配置maven、gradle从远程获取，估计很少直接下载jar放在工程里（对于没有放在maven repository上的库，只能这么干）。这么做方便管理依赖。
 app开发中遇到问题
-
 &emsp;&emsp;做app开发，特别是只有几万行代码量的小项目，开发团队也就几个人，通常只用一个工程玩耍。随着业务扩展，工程变得越来越大，代码量大大增加，开发人数也多了，问题开始暴漏：改动一个地方往往影响到其他人的代码，功能模块耦合严重，构建速度慢....
-
 &emsp;&emsp;业界一些解决方法：1.组件化，按功能拆分出各种组件，数据存储、网络层、日志 等；2.拆分业务，一个业务一个module；3.业务插件化，一个业务一个工程，每个业务独立编译并运行.....
-
 &emsp;&emsp;因此，引入依赖管理是必不可少的。把各个模块单独编译，部署上maven仓库，主工程or业务工程通过maven、gradle引用这些依赖。这么做还有好处，就是持续集成！某个模块修改了，跑单元测试，通过后才放上仓库。业务工程同步一下maven，万一有问题，还可以在服务端回滚到上一个版本。
 
 &emsp;&emsp;所以我们希望通过搭建一个私有maven仓库，来提高我们的开发效率。
@@ -49,6 +45,7 @@ app开发中遇到问题
 ![Nexus下载](https://upload-images.jianshu.io/upload_images/2783386-276489be260b216f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
 ###### **2、Nexus启动**
+
 &emsp;&emsp;下载完成之后，解压后进入D:\xpkit\other\nexus-2.14.8-01-bundle\nexus-2.14.8-01\bin\jsw\windows-x86-64，根据操作系统类型选择文件夹，我选的是windows-x86-64文件夹，进入后可看到如下所示bat文件。
 
 ![Nexus解压后文件](https://upload-images.jianshu.io/upload_images/2783386-56c4bd1fd09e61be.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
@@ -65,6 +62,7 @@ app开发中遇到问题
   ![Neuxs运行成功](https://upload-images.jianshu.io/upload_images/2783386-0403157364ce2be9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
 ###### **3、登录Nexus**
+
 &emsp;&emsp;管理nexus要以管理员身份登录，点击首页右上角的login输入默认登录名、密码admin/admin123即可登录。(如果是公司的局域网服务器换成局域网ip地址就可以了)。登录成功就可以看到如下界面了:
 
 ![nexus登录成功](https://upload-images.jianshu.io/upload_images/2783386-a79f3ec592f5bf2e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
@@ -98,33 +96,42 @@ app开发中遇到问题
 
 ### 五、上传库到Maven仓库
 **1.首先新建一个module，选择Android Library，类似下面这种结构**
+
 ![Android Library项目](https://upload-images.jianshu.io/upload_images/2783386-e7b18517f2d31d88.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
 **2.项目的根目录的gradle.properties配置一些相关信息，主要是一些全局的配置信息**
+
 ![gradle.properties](https://upload-images.jianshu.io/upload_images/2783386-6810a6b29d60dcc9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
 **3.修改module对应的build.gradle文件，添加以下配置**
+
 ![build.gradle](https://upload-images.jianshu.io/upload_images/2783386-8093325d4c8f6552.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
 &emsp;&emsp;**注意：记得在module对应的build.gradle文件上面添加maven依赖apply plugin: 'maven'**
 
 **4.点击uploadArchives进行编译上传**
+
 ![uploadArchives编译上传](https://upload-images.jianshu.io/upload_images/2783386-317a9aa073316a26.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
 **5.去仓库查看到刚刚上传的库文件**
+
 ![查看库文件](https://upload-images.jianshu.io/upload_images/2783386-ec48820681cb94fb.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
 ### 六、在Android项目中应用Maven库文件
+
 **1.新建一个项目，在项目的根目录build.gradle配置如下：**
+
 ![项目的根目录build.gradle配置](https://upload-images.jianshu.io/upload_images/2783386-1d388bfcf10f89e6.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
 **2.在app目录下的build.gradle配置如下：**
+
 ![app目录下的build.gradle配置](https://upload-images.jianshu.io/upload_images/2783386-09be69e4ac4d196c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
 
 &emsp;&emsp;至此配置就算结束了，就可以在Android项目中应用刚刚上传的Maven库文件了。
 
 参考：
+
 &emsp;&emsp;[1,拥抱 Android Studio 之四：Maven 仓库使用与私有仓库搭建](http://kvh.io/cn/embrace-android-studio-maven-deploy.html)
 &emsp;&emsp;[2,使用Gradle和Nexus 搭建私有maven仓库](https://m.2cto.com/kf/201608/543685.html)
 &emsp;&emsp;[3,Android的Nexus搭建Maven私有仓库与使用](https://blog.csdn.net/a565102223/article/details/62891676)
