@@ -17,7 +17,12 @@ Android Maven私有仓库搭建笔记
 &emsp;&emsp;对于第三方库，大家基本都配置maven、gradle从远程获取，估计很少直接下载jar放在工程里（对于没有放在maven repository上的库，只能这么干）。这么做方便管理依赖。
 app开发中遇到问题
 &emsp;&emsp;做app开发，特别是只有几万行代码量的小项目，开发团队也就几个人，通常只用一个工程玩耍。随着业务扩展，工程变得越来越大，代码量大大增加，开发人数也多了，问题开始暴漏：改动一个地方往往影响到其他人的代码，功能模块耦合严重，构建速度慢....
-&emsp;&emsp;业界一些解决方法：1.组件化，按功能拆分出各种组件，数据存储、网络层、日志 等；2.拆分业务，一个业务一个module；3.业务插件化，一个业务一个工程，每个业务独立编译并运行.....
+
+&emsp;&emsp;业界一些解决方法：
+&emsp;&emsp;1.组件化，按功能拆分出各种组件，数据存储、网络层、日志 等；
+&emsp;&emsp;2.拆分业务，一个业务一个module；
+&emsp;&emsp;3.业务插件化，一个业务一个工程，每个业务独立编译并运行.....
+
 &emsp;&emsp;因此，引入依赖管理是必不可少的。把各个模块单独编译，部署上maven仓库，主工程or业务工程通过maven、gradle引用这些依赖。这么做还有好处，就是持续集成！某个模块修改了，跑单元测试，通过后才放上仓库。业务工程同步一下maven，万一有问题，还可以在服务端回滚到上一个版本。
 
 &emsp;&emsp;所以我们希望通过搭建一个私有maven仓库，来提高我们的开发效率。
@@ -133,6 +138,9 @@ app开发中遇到问题
 参考：
 
 &emsp;&emsp;[1,拥抱 Android Studio 之四：Maven 仓库使用与私有仓库搭建](http://kvh.io/cn/embrace-android-studio-maven-deploy.html)
+
 &emsp;&emsp;[2,使用Gradle和Nexus 搭建私有maven仓库](https://m.2cto.com/kf/201608/543685.html)
+
 &emsp;&emsp;[3,Android的Nexus搭建Maven私有仓库与使用](https://blog.csdn.net/a565102223/article/details/62891676)
+
 &emsp;&emsp;[4,Android业务组件化之Gradle和Sonatype Nexus搭建私有maven仓库](https://www.cnblogs.com/whoislcj/p/6490120.html)
